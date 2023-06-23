@@ -1,0 +1,22 @@
+<html>
+    <head>
+        <title>
+                <%=title%>
+        </title>
+        <link rel="stylesheet" href="/css/layout.css">
+        <%-style%>
+        <!-- ##userprofile style should override layout style -->
+    </head>
+
+    <body>
+        <%- include('_header');%>  
+
+        <%-body%> 
+        <!-- got from user_profile or home -->
+
+        
+
+        <%- include('_footer');%>  
+        <%-script%>
+    </body>
+</html>
