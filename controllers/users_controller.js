@@ -2,28 +2,28 @@ const User = require('../models/user')
 
 module.exports.profile = function(req,res)
 {
-    // res.end('<h1>User Profile</h1>');
-    // return res.render('user_profile', {
-    //     title: "User Profile"
-    // });
+    
+    return res.render('user_profile', {
+        title: 'User Profile'
+    })
 
-    if(req.cookies.user_id)
-    {
-            User.findById(req.cookies.user_id)
-            .then((user)=>{
-                return res.render('user_profile',{
-                    title:"User Profile",
-                    user:user
-                });
+    // if(req.cookies.user_id)
+    // {        
+    //         User.findById(req.cookies.user_id)
+    //         .then((user)=>{
+    //             return res.render('user_profile',{
+    //                 title:"User Profile",
+    //                 user:user
+    //             });
                     
-                })
-                .catch((err)=>{
-                    console.log('error in creating user');
-                    return;
-                    })
-    }else{
-        return res.redirect('/users/sign-in');
-    }
+    //             })
+    //             .catch((err)=>{
+    //                 console.log('error in creating user');
+    //                 return;
+    //                 })
+    // }else{
+    //     return res.redirect('/users/sign-in');
+    // }
 }
 //now this controller is ready to be accesed by a router
 //now that route need to be accesed by this browser
@@ -32,8 +32,12 @@ module.exports.profile = function(req,res)
 
 //render the signup page
 module.exports.signUp = function(req,res){
+    if(req.isAuthenticated()){
+        res.redirect('/users/profile');
+    }
+
     return res.render('user_sign_up',{
-        title:"Codeial | Sign Up"
+        title:'Codeial | Sign Up'
     })
 
 
@@ -41,6 +45,11 @@ module.exports.signUp = function(req,res){
 
 //render the signin page
 module.exports.signIn = function(req,res){
+
+    if(req.isAuthenticated()){
+        res.redirect('/users/profile');
+    }
+
     return res.render('user_sign_in',{
         title:"Codeial | Sign In"
     })
@@ -153,4 +162,12 @@ module.exports.createSession = function(req,res){
     // })
 
 
+}
+
+module.exports.destroySession=(req,res)=>{
+    req.logout((err)=>{
+        if(err) return next(err);
+        return res.redirect('/users/sign-in');
+    })
+    
 }
