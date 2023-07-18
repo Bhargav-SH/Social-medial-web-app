@@ -10,12 +10,13 @@ const postSchema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User' //user is schema we are referring to
-    }
+    },
     //include the array of ids of comments on this post to search in Comments model
-    // comments: [{
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: 'Comment'
-    // }],
+    //this method is faster
+    comments: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Comment'
+    }],
     // likes: [{
     //     type: mongoose.Schema.Types.ObjectId,
     //     ref: 'Like'

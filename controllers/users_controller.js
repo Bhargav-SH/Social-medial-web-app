@@ -1,11 +1,20 @@
 const User = require('../models/user')
 
-module.exports.profile = function(req,res)
+module.exports.profile = async(req,res)=>
 {
-    
-    return res.render('user_profile', {
-        title: 'User Profile'
-    })
+        //req.user.id is us
+    //req.params.id is friend
+    let me = await User.findById(req.user.id);
+    User.findById(req.params.id)
+    .then((user) => {
+        res.render('user_profile', {
+            title: 'User Profile',
+            profile_user: user,
+        });
+    });
+    // return res.render('user_profile', {
+    //     title: 'User Profile'
+}
 
     // if(req.cookies.user_id)
     // {        
@@ -24,7 +33,7 @@ module.exports.profile = function(req,res)
     // }else{
     //     return res.redirect('/users/sign-in');
     // }
-}
+
 //now this controller is ready to be accesed by a router
 //now that route need to be accesed by this browser
 //action returns data

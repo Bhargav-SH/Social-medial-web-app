@@ -1,5 +1,5 @@
 <!-- <h1>Codeial /  <%=title%></h1> -->
-<link rel="stylesheet" href="/css/home.css">
+<!-- <link rel="stylesheet" href="/css/home.css">
 <section id="feed-posts">
         <h4>Posts</h4>
         <% if(locals.user){ %>
@@ -20,7 +20,17 @@
                             <small>
                                 <%= post.user.name%>
                             </small> 
-                            </p>   
+                            </p> 
+                            <div class="'post-comments">
+                                <% if(locals.user){%>
+                                      <form action="/comments/create" method="POST">
+                                        <input type="text" name="'content" placeholder="Add comment..">
+                                        <input type="hidden" name="post" value="<%=post._id%>">
+                                        <input type="submit" value="Add comment">
+                                      </form>  
+
+                                <%}%>
+                            </div>  
                         </li>
                    <%}%>
 
@@ -28,4 +38,48 @@
         </div>
 
 </section>
+ -->
 
+
+
+<link rel="stylesheet" href="/css/home.css">
+
+<% if(locals.user){ %>
+    <div id="home-container">
+   
+
+        <section id="feed-posts">
+            <div class="form-container">
+                <form action="/posts/create" id="new-post-form" method="POST">
+                    <div class="input-container">
+                        <textarea name="content" placeholder="Type Here..." cols="70" required></textarea>
+                        <button type="submit" class="post-button">&#10148;</button>
+                    </div>
+                </form>
+            </div>
+
+
+            <div id="posts-list-container">
+                <ul style="padding: 0px;">
+                    <% for(post of posts){ %>
+
+                        <%- include('_post') -%>
+
+                            <%} %>
+                </ul>
+            </div>
+        </section>
+        <section id="user-friends">
+            <h3>Friends</h3>
+            <ul>
+                <%for(u of all_users){%>
+                <li><a href="/users/profile/<%=u._id%>"><%=u.name%>
+                      
+                    </a></li>
+                <%}%>
+            </ul>
+        </section>
+      
+    </div>
+    <% } %>
+   

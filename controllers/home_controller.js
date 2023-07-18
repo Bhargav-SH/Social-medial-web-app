@@ -10,15 +10,17 @@ module.exports.home = async function(req, res){
         const posts = await Post.find({})
         //populating the user of each post
         .populate('user')
-        // .populate({
-        //     populate: {
-        //         path: 'user'
-        //     }
-        // })
-    // const users = await User.find({})
+        .populate({
+            path: 'comments',
+            populate: {
+                path: 'user'
+            }
+        })
+     const users = await User.find({})
         return res.render('home', {
             title: "Home",
-            posts: posts
+            posts: posts,
+            all_users: users
         })
     }catch (err) {
         console.log("error in asyn/await");
